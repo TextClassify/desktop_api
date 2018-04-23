@@ -67,34 +67,23 @@ public class GetClass {
     /**
      * function: give one text and return its class
      * @param text
-     * @return json string or ""
+     * @return map or null
      */
-    public String getOneTextClass(String text){
-        try {
-            return new ObjectMapper().writeValueAsString(this.runLoadModelAndUse(text));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "";
+    public Map getOneTextClass(String text){
+        return this.runLoadModelAndUse(text);
     }
 
     /**
      * function: give some text and return their classes
      * @param text
-     * @return json string or ""
+     * @return map or null
      */
-    public String getSomeTextClass(String[] text){
+    public Map getSomeTextClass(String[] text){
         Map<Integer,Map> result = new HashMap<>();
         for (int i=0;i<text.length;i++) {
             result.put(i, this.runLoadModelAndUse(text[i]));
         }
-
-        try {
-            return new ObjectMapper().writeValueAsString(result);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return "";
-        }
+        return result;
     }
 
 

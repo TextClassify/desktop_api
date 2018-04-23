@@ -1,5 +1,6 @@
 package com.laowang.controller;
 
+import com.laowang.bean.Result;
 import com.laowang.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -25,17 +26,19 @@ public class MainController {
     private MainService service;
 
     @RequestMapping(value = "/oneText",method = RequestMethod.POST)
-    public @ResponseBody String getResultByOneText(String text){
+    public @ResponseBody Result getResultByOneText(String text){
         System.out.println("get one text and it is: "+text);
         return service.getOneTextClass(text);
     }
 
     @RequestMapping(value = "/someText",method = RequestMethod.POST)
-    public @ResponseBody String getResultBySomeText(HttpServletRequest request){
+    public @ResponseBody Result getResultBySomeText(HttpServletRequest request){
         Map map = request.getParameterMap();
         return service.getSomeTextClasses(map);
     }
 
+
+    //------------------废物代码------------------------------------
     @RequestMapping("/init")//别请求
     public @ResponseBody String initModel(){
         this.storeFile("classpath:news_model/category","/root/textClassify/model/category");

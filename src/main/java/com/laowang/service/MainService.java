@@ -1,12 +1,11 @@
 package com.laowang.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.laowang.bean.Result;
 import com.laowang.utils.GetClass;
+import com.laowang.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -20,20 +19,22 @@ public class MainService {
     @Autowired
     private GetClass getClass;
 
-    public String getOneTextClass(String text){
-        return getClass.getOneTextClass(text);
+    public Result getOneTextClass(String text){
+        Map result = getClass.getOneTextClass(text);
+        return result == null ? ResultUtils.error(1,"未知的错误") : ResultUtils.success(result);
     }
 
-    public String getSomeTextClasses(Map map){
+    public Result getSomeTextClasses(Map map){
         //用来转换post参数，存放文本
         List<String> data = new LinkedList<>();
-        for (Object o: map.values()) {
+        for (Object o : map.values()) {
             data.add(((String[])o)[0]);
         }
         String[] text = new String[data.size()];
         for (int i=0;i<data.size();i++){
             text[i] = data.get(i);
         }
-        return getClass.getSomeTextClass(text);
+        Map result = getClass.getSomeTextClass(text);
+        return result == null ? ResultUtils.error(1,"未知的错误"):ResultUtils.success(result);
     }
 }
