@@ -58,13 +58,19 @@ _返回其他结果说明:_
                  "code": 1,
                  "msg": "未知的错误.",
                  "data": null
-          }
+      }
       2. 后台系统的 
       {
                   "code": 2,
                   "msg": "系统异常，请联系老王.",
                   "data": null
-              }
+      }
+      3. 请求路径不存在
+      {
+                  "code": 3,
+                  "msg": "请求地址:/api/oneText1不存在",
+                  "data": null
+      }
 
 **TODO**
 - 加token
