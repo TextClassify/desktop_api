@@ -19,6 +19,11 @@ public class MainService {
     @Autowired
     private GetClass getClass;
 
+    /**
+     *
+     * @param text : 文档内容
+     * @return : 分类
+     */
     public Result getOneTextClass(String text){
         Map result = getClass.getOneTextClass(text);
         return result == null ? ResultUtils.error(1,"未知的错误") : ResultUtils.success(result);
@@ -26,9 +31,19 @@ public class MainService {
 
     public Result getSomeTextClasses(Map map){
         //用来转换post参数，存放文本
+//        List<String> data = new LinkedList<>();
+//        for (Object o : map.values()) {
+//            data.add(((String[])o)[0]);
+//        }
+//        String[] text = new String[data.size()];
+//        for (int i=0;i<data.size();i++){
+//            text[i] = data.get(i);
+//        }
+//        Map result = getClass.getSomeTextClass(text);
+//        return result == null ? ResultUtils.error(1,"未知的错误"):ResultUtils.success(result);
         List<String> data = new LinkedList<>();
         for (Object o : map.values()) {
-            data.add(((String[])o)[0]);
+            data.add((String)o);
         }
         String[] text = new String[data.size()];
         for (int i=0;i<data.size();i++){

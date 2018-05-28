@@ -1,14 +1,15 @@
 package com.laowang.controller;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.laowang.bean.Result;
+import com.laowang.bean.User;
 import com.laowang.service.MainService;
+import com.laowang.service.UserService;
+import com.laowang.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -20,23 +21,36 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class MainController {
 
     @Autowired
     private MainService service;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "/oneText",method = RequestMethod.POST)
-    public @ResponseBody Result getResultByOneText(String text){
-        System.out.println("get one text and it is: "+text);
+    public @ResponseBody Result getResultByOneText(@RequestBody String text){
         return service.getOneTextClass(text);
     }
 
     @RequestMapping(value = "/someText",method = RequestMethod.POST)
-    public @ResponseBody Result getResultBySomeText(HttpServletRequest request){
-        Map map = request.getParameterMap();
-        return service.getSomeTextClasses(map);
+    public @ResponseBody Result getResultBySomeText(@RequestBody Map jsonMap){
+        if (jsonMap != null)
+            System.out.println(jsonMap);
+        return service.getSomeTextClasses(jsonMap);
     }
 
+    @PostMapping(value = "/login")
+    public @ResponseBody  Result userLogin(@RequestBody User user){
+        return userService.checkLogin(user);
+    }
+
+    @PostMapping(value = "/register")
+    public @ResponseBody Result userRegister(@RequestBody User user){
+        return userService.registor(user);
+    }
 
     //------------------废物代码------------------------------------
     @RequestMapping("/init")//别请求
