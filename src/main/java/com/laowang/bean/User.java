@@ -1,9 +1,16 @@
 package com.laowang.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 /**
  * Created by wangyonghao8 on 2018/5/21.
  */
+@Entity
 public class User {
+    @Id
+    @GeneratedValue
     private Integer id;
     private String userName;
     private String password;
