@@ -9,6 +9,7 @@
     1. 功能：获取一篇文章的分类
       路径：http://120.24.66.93:8088/api/oneText
       参数：{'text': '再次回到世锦赛的赛场上，林丹终于变回了以前的那个超级丹'}
+      如果请求头包含token字段，将会记录用户数据
       参数说明：key必须是text
       返回结果：{
                "code": 0,
@@ -58,6 +59,8 @@
        	 "password":"123",
        	  }
      返回结果：
+       响应头包含token字段
+       `Authorization →Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4aWFvd2FuZyIsImtleUdlbiI6IiJ9.y0l0zA7NLT-0O1IGPVDwsrdv2t2ca640QuXDQo80gEwzUQNpfO1aAXL1A2pMFebikZfcsVuue2x6W8F4h2RhSA`
        合法：{
               "code": 0,
               "msg": "成功.",
@@ -111,8 +114,12 @@ _返回其他结果说明:_
                   "msg": "请求地址:/api/oneText1不存在",
                   "data": null
       }
-
+添加token方式截图
+![](http://onhavnxj2.bkt.clouddn.com/token.png)
+目前获取一篇文章分类结果的api有token功能，登录接口返回token
 **TODO**
-- 加token
+- ~~加token~~
 - ~~重构优化(请求结果格式统一，系统异常处理)~~
+- 用户中心完善，包含用户分类文章分享功能
+- 文本分类核心算法改用百度的
 - 分类算法更替为算法团队那边的，删除本项目。

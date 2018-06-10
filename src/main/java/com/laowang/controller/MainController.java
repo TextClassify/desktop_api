@@ -1,18 +1,26 @@
 package com.laowang.controller;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.laowang.aspect.HttpAspect;
+import com.laowang.bean.Article;
 import com.laowang.bean.Result;
 import com.laowang.bean.User;
+import com.laowang.repository.ArticleRepository;
 import com.laowang.service.MainService;
 import com.laowang.service.UserService;
+import com.laowang.utils.JwtUtil;
 import com.laowang.utils.ResultUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.Date;
 import java.util.Map;
 
 
@@ -24,15 +32,45 @@ import java.util.Map;
 @CrossOrigin
 public class MainController {
 
+    private final static Logger logger = LoggerFactory.getLogger(MainController.class.getName());
+
     @Autowired
     private MainService service;
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ArticleRepository articleRepository;
+
     @RequestMapping(value = "/oneText",method = RequestMethod.POST)
-    public @ResponseBody Result getResultByOneText(@RequestBody String text){
-        return service.getOneTextClass(text);
+    public @ResponseBody Result getResultByOneText(@RequestBody Article article,
+                                                   HttpServletRequest request){
+        Result result = service.getOneTextClass(article.getText());
+        //如果有用户，这里接口应该还需要用户名参数用来提高token的安全性，降低被别人成功盗用的可能性
+        String token = request.getHeader("Authorization");
+        if(token != null && !"".equals(token)){
+            String name = JwtUtil.getUserNameByToken(token.replace("Bearer ", ""));
+            if(name != null && !"".equals(name)){
+                logger.info("有token请求，用户是"+name);
+                User user = userService.findUserByUserName(name);
+                if (user != null){
+                    article.setOwerId(user.getId());
+                    article.setDate(new Date().toString());
+                    article.setShare(false);
+                    article.setTag(result.getData().toString());
+                    articleRepository.save(article);
+                }
+            }else{
+                result.setMsg("token异常，正常提供服务");
+            }
+        }
+        return result;
+    }
+
+    @GetMapping("/share")
+    public @ResponseBody String shareArticle(){
+        return "对不起，现在不能提供分享功能";
     }
 
     @RequestMapping(value = "/someText",method = RequestMethod.POST)
@@ -43,8 +81,13 @@ public class MainController {
     }
 
     @PostMapping(value = "/login")
-    public @ResponseBody  Result userLogin(@RequestBody User user){
-        return userService.checkLogin(user);
+    public @ResponseBody  Result userLogin(@RequestBody User user, HttpServletResponse response){
+        if (userService.checkLogin(user)){
+            String token = JwtUtil.initToken(user.getUserName(),"");
+            response.addHeader("Authorization", "Bearer " + token);
+            return ResultUtils.success(user.getUserName()+"登陆成功");
+        }
+        return ResultUtils.error(233,"用户名或密码错误");
     }
 
     @PostMapping(value = "/register")

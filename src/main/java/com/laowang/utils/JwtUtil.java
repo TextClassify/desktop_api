@@ -1,36 +1,58 @@
 package com.laowang.utils;
 
+import com.laowang.bean.User;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.crypto.MacProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by wangyonghao8 on 2018/4/24.
  */
+@Component
 public class JwtUtil {
-    Key key = MacProvider.generateKey();
+    private final static Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
-    public String getTokenByName(String name){
-        Map map = new HashMap();
-        map.put("name",name);
-        return Jwts.builder().setClaims(map).signWith(SignatureAlgorithm.HS512,key).compact();
+    private static String key= "laowang";
+
+    public static String getUserNameByToken(String token){
+        String userName;
+        try {
+             Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+             userName = claims.getSubject();
+        }catch (Exception e) {
+            logger.warn("token异常");
+            userName = null;
+        }
+        return userName;
     }
 
-    public Claims getClaimsFromToken(String token){
-        Claims claims;
-        try {
-             claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
-        }catch (io.jsonwebtoken.SignatureException e) {
 
-            //don't trust the JWT!  请求发送到登陆界面
-            claims = null;
+    public static String initToken(String name,String keyGen){
+        //生成数据声明claims
+        Map<String,Object> claims = new HashMap<>();
+        claims.put("sub",name);
+        claims.put("keyGen",keyGen);
+        String Token = Jwts.builder().setClaims(claims)
+                //加密算法
+                .signWith(SignatureAlgorithm.HS512,key).compact();
+        return Token;
+    }
+
+    public static String freshtoken(String name){
+        String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random=new Random();
+        StringBuffer sb=new StringBuffer();
+        for(int i=0;i<10;i++){
+            int number=random.nextInt(62);
+            sb.append(str.charAt(number));
         }
-        return claims;
+        return initToken(name,sb.toString());
     }
 }
