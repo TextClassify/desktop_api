@@ -23,6 +23,26 @@
 | 查自己的所有云端文章 | http://120.24.66.39:8088/user/allUserArticles |
 
 
+**接口数据字段说明**
+1. article实体中tag为一级标签(一定有)，tag1、tag2、tag3为二级标签(可能没有)
+2. article的share为1表示处于分享状态、0表示私有状态
+3. article的state为0表示处于有效状态、1表示被删除(垃圾站)
+4. owerId为文章拥有者id，不需要保存
+5. code码对照表如下
+
+|code码| 含义说明 |
+| :---:| :---- |
+| 0 | 成功 |
+| 1 | 未知错误 |
+| 2 | 系统异常 |
+| 3 | 请求地址不存在 |
+| 10 | 登陆失败 |
+| 11 | 用户名已存在 |
+| 12 | token不合法 |
+| 13 | 没有权限分享该文章 |
+| 14 | 没有权限删除该文章 |
+| 15 | 用户名和token不一致 |
+
 **详细接口说明**
     
     5.功能：用户登陆
@@ -245,7 +265,7 @@
                 "data": null
             }
     
-    11.功能：查看所有用户分享的文章（//TODO 分页和排序）
+    11.功能：查看所有用户分享的文章（//TODO 分页和排序）//TODO 有待考究是否需要全开放
        路径：http://120.24.66.39:8088/user/allSharingArticles
        参数：{
           		"access_token":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ4aWFvd2FuZyIsInVpZCI6NCwia2V5R2VuIjoiMC4yMzE2NDgyNTgyMjk1Nzc0NiJ9.yzWBATnJ8zSqlTWw7LoWZNblMIaYSEYkSzANHqXBvEyKcRw0aDjuGsiUTD-LwtPPTH-5S6aIlRV_CB__kLEPug"
