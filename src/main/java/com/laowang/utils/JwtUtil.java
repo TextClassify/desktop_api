@@ -19,25 +19,55 @@ import java.util.Random;
 public class JwtUtil {
     private final static Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
+    //token密钥
     private static String key= "laowang";
 
+    /**
+     * 从token提取用户名
+     * @param token
+     * @return
+     */
     public static String getUserNameByToken(String token){
         String userName;
         try {
              Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
              userName = claims.getSubject();
         }catch (Exception e) {
-            logger.warn("token异常");
+            logger.warn("token异常,name");
             userName = null;
         }
         return userName;
     }
 
 
-    public static String initToken(String name,String keyGen){
+    /**
+     * 从token提取用户id
+     * @param token
+     * @return
+     */
+    public static Integer getUserIdByToken(String token){
+        Integer id;
+        try {
+            Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+            id = claims.get("uid",Integer.class);
+        }catch (Exception e) {
+            logger.warn("token异常,id");
+            id = null;
+        }
+        return id;
+    }
+
+    /**
+     * 创建token
+     * @param user
+     * @param keyGen
+     * @return
+     */
+    public static String initToken(User user,String keyGen){
         //生成数据声明claims
         Map<String,Object> claims = new HashMap<>();
-        claims.put("sub",name);
+        claims.put("sub",user.getUserName());
+        claims.put("uid",user.getId());
         claims.put("keyGen",keyGen);
         String Token = Jwts.builder().setClaims(claims)
                 //加密算法
@@ -45,14 +75,4 @@ public class JwtUtil {
         return Token;
     }
 
-    public static String freshtoken(String name){
-        String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        Random random=new Random();
-        StringBuffer sb=new StringBuffer();
-        for(int i=0;i<10;i++){
-            int number=random.nextInt(62);
-            sb.append(str.charAt(number));
-        }
-        return initToken(name,sb.toString());
-    }
 }

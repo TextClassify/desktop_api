@@ -28,11 +28,11 @@ public class GetClass {
         try {
             classifier.setTextClassifier(new LinearBigramChineseTextClassifier(classifier.getCategorySize()));
             //windows本地开发用到的路径
-            classifier.loadCategoryListFromFile(ResourceUtils.getFile("classpath:news_model/category").getPath());
-            classifier.getTextClassifier().loadModel(ResourceUtils.getFile("classpath:news_model").getPath());
+//            classifier.loadCategoryListFromFile(ResourceUtils.getFile("classpath:news_model/category").getPath());
+//            classifier.getTextClassifier().loadModel(ResourceUtils.getFile("classpath:news_model").getPath());
             //部署到服务器上用到的路径，并且服务器上必须存在目录  TODO：/root/textClassify/model
-//            classifier.loadCategoryListFromFile("/root/textClassify/model/category");
-//            classifier.getTextClassifier().loadModel("/root/textClassify/model");
+            classifier.loadCategoryListFromFile("/root/textClassify/model/category");
+            classifier.getTextClassifier().loadModel("/root/textClassify/model");
         }catch (Exception e){
             e.printStackTrace();
             return null;

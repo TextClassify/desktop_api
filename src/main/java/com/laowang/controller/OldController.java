@@ -1,7 +1,5 @@
 package com.laowang.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.laowang.aspect.HttpAspect;
 import com.laowang.bean.Article;
 import com.laowang.bean.Result;
 import com.laowang.bean.User;
@@ -30,9 +28,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class MainController {
+public class OldController {
 
-    private final static Logger logger = LoggerFactory.getLogger(MainController.class.getName());
+    private final static Logger logger = LoggerFactory.getLogger(OldController.class.getName());
 
     @Autowired
     private MainService service;
@@ -46,7 +44,7 @@ public class MainController {
     @RequestMapping(value = "/oneText",method = RequestMethod.POST)
     public @ResponseBody Result getResultByOneText(@RequestBody Article article,
                                                    HttpServletRequest request){
-        Result result = service.getOneTextClass(article.getText());
+        Result result = service.getOneTextClass(article.getContent());
         //如果有用户，这里接口应该还需要用户名参数用来提高token的安全性，降低被别人成功盗用的可能性
         String token = request.getHeader("Authorization");
         if(token != null && !"".equals(token)){
@@ -57,7 +55,7 @@ public class MainController {
                 if (user != null){
                     article.setOwerId(user.getId());
                     article.setDate(new Date().toString());
-                    article.setShare(false);
+                    article.setShare(0);
                     article.setTag(result.getData().toString());
                     articleRepository.save(article);
                 }
@@ -82,8 +80,8 @@ public class MainController {
 
     @PostMapping(value = "/login")
     public @ResponseBody  Result userLogin(@RequestBody User user, HttpServletResponse response){
-        if (userService.checkLogin(user)){
-            String token = JwtUtil.initToken(user.getUserName(),"");
+        if (userService.checkLogin(user) != null){
+            String token = JwtUtil.initToken(user,"");
             response.addHeader("Authorization", "Bearer " + token);
             return ResultUtils.success(user.getUserName()+"登陆成功");
         }
@@ -91,7 +89,7 @@ public class MainController {
     }
 
     @PostMapping(value = "/register")
-    public @ResponseBody Result userRegister(@RequestBody User user){
+    public @ResponseBody User userRegister(@RequestBody User user){
         return userService.registor(user);
     }
 

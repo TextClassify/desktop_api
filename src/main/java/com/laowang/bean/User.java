@@ -11,11 +11,31 @@ import javax.persistence.Id;
 public class User {
     @Id
     @GeneratedValue
-    private Integer id;
-    private String userName;
-    private String password;
-    private String email;
-    private String lastLogin;
+    private Integer id;//用户id
+    private String userName;//用户名
+    private String password;//用户密码
+    private String email;//用户邮箱
+    private String information;//用户个人介绍
+    private String lastLogin;//最后一次登录时间
+    //
+    @javax.persistence.Transient
+    private String access_token;
+
+    public String getAccess_token() {
+        return access_token;
+    }
+
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
+    }
+
+    public String getInformation() {
+        return information;
+    }
+
+    public void setInformation(String information) {
+        this.information = information;
+    }
 
     public Integer getId() {
         return id;
@@ -64,7 +84,9 @@ public class User {
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", information='" + information + '\'' +
                 ", lastLogin='" + lastLogin + '\'' +
+                ", access_token='" + access_token + '\'' +
                 '}';
     }
 }

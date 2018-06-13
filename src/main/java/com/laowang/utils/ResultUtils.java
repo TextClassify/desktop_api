@@ -13,9 +13,13 @@ public class ResultUtils {
      * @return http请求成功返回的最外层对象
      */
     public static Result success(Object var){
+        return success(var,"成功");
+    }
+
+    public static Result success(Object var,String msg){
         Result result = new Result();
         result.setCode(0);//成功返回0
-        result.setMsg("成功.");
+        result.setMsg(msg);
         result.setData(var);
         return result;
     }
