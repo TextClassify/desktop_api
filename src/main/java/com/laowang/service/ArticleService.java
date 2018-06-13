@@ -4,11 +4,17 @@ import com.laowang.bean.Article;
 import com.laowang.repository.ArticleRepository;
 import com.laowang.utils.api.baidu.ClassiferFromBaidu;
 import com.laowang.utils.api.baidu.ResultTagBean;
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ArticleService {
@@ -99,6 +105,49 @@ public class ArticleService {
      */
     public List<Article> getAllSharingArticles(){
         return repository.findAllByShareAndState(1,1);
+    }
+
+
+    /**
+     * 用户获取网络文章分类结果
+     * @param url
+     * @param uid
+     * @return
+     */
+    public Article userGetNetArticle(String url, Integer uid){
+        url = "http://ci.lab317.org/api/v1/extract?url="+url;
+        try {
+            Document doc = Jsoup.connect(url).ignoreContentType(true).get();
+            String result = doc.body().html();
+            //用户提交数据将会被记录
+            JSONObject jsonObject = new JSONObject(result);
+            String content = jsonObject.getString("content");
+            String title = jsonObject.getString("title");
+            Article article = new Article();
+            article.setOwerId(uid);
+            article.setTitle(title);
+            article.setContent(content);
+            return buildeArticle(article);//TODO 要么解析，要么再发送一次网络请求
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 公共接口，获取网络文章分类
+     * @param url
+     * @return
+     */
+    public String getNetArticle(String url){
+        url = "http://ci.lab317.org/api/v1/extract?url="+url;
+        try {
+            Document doc = Jsoup.connect(url).ignoreContentType(true).get();
+            return doc.body().html();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

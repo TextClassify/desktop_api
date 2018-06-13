@@ -1,8 +1,6 @@
 package com.laowang.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by wangyonghao8 on 2018/6/3.
@@ -13,6 +11,7 @@ public class Article {
     @GeneratedValue
     private Integer id;//文章id
     private String title;//文章标题
+    @Lob
     private String content;//文章内容
     private String tag;//一级分类
     private String tag1;//二级分类

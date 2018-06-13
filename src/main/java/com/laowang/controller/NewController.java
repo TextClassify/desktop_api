@@ -18,7 +18,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin
-public class UserController {
+public class NewController {
     @Autowired
     private UserService service;
 
@@ -205,6 +205,23 @@ public class UserController {
         Map map = new HashMap();
         map.put("articles",articleService.getArticlesByUserId(uid));
         return ResultUtils.success(map);
+    }
+
+    /**
+     * 获取网络文章分类
+     * @param article 用户token,url
+     * @param url 待分类文章地址
+     * @return
+     */
+    @PostMapping("/netArticle")
+    public @ResponseBody Result getNetArticleTags(@RequestBody Article article,@RequestParam String url){
+        Integer uid = JwtUtil.getUserIdByToken(article.getAccess_token());
+        if (uid == null )//检查用户和token一致性
+            return ResultUtils.error(12,"token不合法");
+        article = articleService.userGetNetArticle(url,uid);
+        if (article==null)
+            ResultUtils.error(16,"网络文章解析失败");
+        return ResultUtils.success(article,"网络文章解析成功");
     }
 
     //TODO:批量文章分享

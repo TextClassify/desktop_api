@@ -7,7 +7,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class ClassiferFromBaidu {
 
             //获取到分类结果，并解析出json串
             String result = doc.body().html();
-            System.out.println(result);
+
             JSONObject jsonpObject = new JSONObject(result);
             JSONObject item = jsonpObject.getJSONObject("item");
             //准备封装结果bean，用于封装分类结果

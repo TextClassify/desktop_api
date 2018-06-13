@@ -4,6 +4,7 @@ import com.laowang.bean.Article;
 import com.laowang.bean.Result;
 import com.laowang.bean.User;
 import com.laowang.repository.ArticleRepository;
+import com.laowang.service.ArticleService;
 import com.laowang.service.MainService;
 import com.laowang.service.UserService;
 import com.laowang.utils.JwtUtil;
@@ -91,6 +92,13 @@ public class OldController {
     @PostMapping(value = "/register")
     public @ResponseBody User userRegister(@RequestBody User user){
         return userService.registor(user);
+    }
+
+    @Autowired
+    ArticleService articleService;
+    @GetMapping("/netArticle")
+    public @ResponseBody String getNetArticleTag(@RequestParam String url){
+        return articleService.getNetArticle(url);
     }
 
     //------------------废物代码------------------------------------
