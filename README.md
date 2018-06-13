@@ -1,4 +1,4 @@
-### textClassify 桌面端后台服务（简陋版）
+## textClassify 桌面端后台服务（简陋版）
 
 **说明:**
 1. clone项目本地是构建不起来的，pom文件中依赖了我自己发布到本地仓库的jar（jar包在libs目录中）
@@ -7,11 +7,11 @@
 4. 增加了用户中心功能、token、分享分类文章等操作
 5. 待解决token过期处理、分页查询和排序
 
-#### 新接口
+### 新接口
 
 |功能描述| 接口地址 |
 | :---:| :---- |
-| 用户登陆 | http://120.24.66.39:8088/user/login |
+| [用户登陆](https://github.com/TextClassify/desktop_api/blob/master/README.md#5.功能：用户登陆) | http://120.24.66.39:8088/user/login |
 | 用户注册 | http://120.24.66.39:8088/user/register |
 | 用户更新 | http://120.24.66.39:8088/user/update |
 | 一篇文章分类 | http://120.24.66.39:8088/user/oneText |
@@ -45,7 +45,7 @@
 
 **详细接口说明**
     
-    5.功能：用户登陆
+#### 5.功能：用户登陆
       路径：http://120.24.66.39:8088/user/login
       参数：{
          	"userName":"xiaowang",
@@ -90,7 +90,8 @@
                "data": null
            }
     
-    6.功能：用户注册
+6.功能：用户注册
+
       路径：http://120.24.66.39:8088/user/register
       参数：{
          	"userName":"xiaoluo",
