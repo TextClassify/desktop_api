@@ -11,16 +11,16 @@
 
 |功能描述| 接口地址 |
 | :---:| :---- |
-| [用户登陆](https://github.com/TextClassify/desktop_api/blob/master/README.md#5功能用户登陆) | /user/login |
-| [用户注册](https://github.com/TextClassify/desktop_api/blob/master/README.md#6功能用户注册) | /user/register |
-| [用户更新](https://github.com/TextClassify/desktop_api/blob/master/README.md#7功能更新用户信息) | /user/update |
-| [一篇文章分类](https://github.com/TextClassify/desktop_api/blob/master/README.md#8功能用户获取一篇文章的分类) | /user/oneText |
-| [分享一篇文章](https://github.com/TextClassify/desktop_api/blob/master/README.md#9功能用户分享一篇文章) | /user/shareArticle |
-| [删除一篇文章](https://github.com/TextClassify/desktop_api/blob/master/README.md#10功能用户删除一篇文章) | /user/deleteArticle |
-| [所有用户分享的文章](https://github.com/TextClassify/desktop_api/blob/master/README.md#11功能查看所有用户分享的文章) | /user/allSharingArticles |
-| [查自己分享的所有文章](https://github.com/TextClassify/desktop_api/blob/master/README.md#12功能查看自己分享的所有文章) | /user/allUserSharedArticles |
-| [某用户分享的所有文章](https://github.com/TextClassify/desktop_api/blob/master/README.md#13功能查看某用户分享的所有文章) | /user/userSharingArticles |
-| [查自己的所有云端文章](https://github.com/TextClassify/desktop_api/blob/master/README.md#14功能查看自己所有的文章) | /user/allUserArticles |
+| [用户登陆](https://github.com/TextClassify/desktop_api/blob/master/README.md#5用户登陆) | /user/login |
+| [用户注册](https://github.com/TextClassify/desktop_api/blob/master/README.md#6用户注册) | /user/register |
+| [用户更新](https://github.com/TextClassify/desktop_api/blob/master/README.md#7更新用户信息) | /user/update |
+| [一篇文章分类](https://github.com/TextClassify/desktop_api/blob/master/README.md#8用户获取一篇文章的分类) | /user/oneText |
+| [分享一篇文章](https://github.com/TextClassify/desktop_api/blob/master/README.md#9用户分享一篇文章) | /user/shareArticle |
+| [删除一篇文章](https://github.com/TextClassify/desktop_api/blob/master/README.md#10用户删除一篇文章) | /user/deleteArticle |
+| [所有用户分享的文章](https://github.com/TextClassify/desktop_api/blob/master/README.md#11查看所有用户分享的文章) | /user/allSharingArticles |
+| [查自己分享的所有文章](https://github.com/TextClassify/desktop_api/blob/master/README.md#12查看自己分享的所有文章) | /user/allUserSharedArticles |
+| [某用户分享的所有文章](https://github.com/TextClassify/desktop_api/blob/master/README.md#13查看某用户分享的所有文章) | /user/userSharingArticles |
+| [查自己的所有云端文章](https://github.com/TextClassify/desktop_api/blob/master/README.md#14查看自己所有的文章) | /user/allUserArticles |
 
  [老接口](https://github.com/TextClassify/desktop_api/blob/master/README.md#老版本接口)采用清华大学提供的文本分类算法[THUCTC](https://github.com/thunlp/THUCTC)
 
@@ -46,7 +46,7 @@
 
 **详细接口说明**
     
-#### 5.功能：用户登陆
+#### 5.用户登陆
       路径：http://120.24.66.39:8088/user/login
       参数：{
          	"userName":"xiaowang",
@@ -91,7 +91,7 @@
                "data": null
            }
     
-#### 6.功能：用户注册 
+#### 6.用户注册 
       路径：http://120.24.66.39:8088/user/register
       参数：{
          	"userName":"xiaoluo",
@@ -122,7 +122,7 @@
                "data": null
            }
 
-#### 7.功能：更新用户信息
+#### 7.更新用户信息
       路径：http://120.24.66.39:8088/user/update
       参数：{
          	"userName":"xiaoluo",
@@ -159,7 +159,7 @@
                "data": null
            }
     
-#### 8.功能：用户获取一篇文章的分类
+#### 8.用户获取一篇文章的分类
       路径：http://120.24.66.39:8088/user/oneText
       参数：{
          	"content":"欧洲冠军联赛是欧洲足球协会联盟主办的年度足球比赛，代表欧洲俱乐部足球最高荣誉和水平，被认为是全世界最高素质、最具影响力以及最高水平的俱乐部赛事，亦是世界上奖金最高的足球赛事和体育赛事之一。",
@@ -193,7 +193,7 @@
                "data": null
            }
     
-#### 9.功能：用户分享一篇文章
+#### 9.用户分享一篇文章
       路径：http://120.24.66.39:8088/user/shareArticle
       参数：{
          	"id":8,
@@ -236,7 +236,7 @@
                "data": null
            }
     
-#### 10.功能：用户删除一篇文章
+#### 10.用户删除一篇文章
        路径：http://120.24.66.39:8088/user/deleteArticle
        参数：{
           	"id":8,
@@ -266,7 +266,7 @@
                 "data": null
             }
     
-#### 11.功能：查看所有用户分享的文章
+#### 11.查看所有用户分享的文章
       （//TODO 分页和排序）//TODO 有待考究是否需要全开放
        路径：http://120.24.66.39:8088/user/allSharingArticles
        参数：{
@@ -315,7 +315,7 @@
                 "data": null
             }
     
-#### 12.功能：查看自己分享的所有文章
+#### 12.查看自己分享的所有文章
        路径：http://120.24.66.39:8088/user/allUserSharedArticles
        参数：{
           	"userName":"xiaowang",
@@ -356,7 +356,7 @@
                 "data": null
             }
     
-#### 13.功能：查看某用户分享的所有文章
+#### 13.查看某用户分享的所有文章
            路径：http://120.24.66.39:8088/user/userSharingArticles
            参数：{
               	"userName":"xiaowang"
@@ -391,7 +391,7 @@
                     "data": null
                 }
     
-#### 14.功能：查看自己所有的文章
+#### 14.查看自己所有的文章
        路径：http://120.24.66.39:8088/user/allUserArticles
        参数：{
           	"userName":"xiaowang",
