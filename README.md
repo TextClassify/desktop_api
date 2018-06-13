@@ -11,7 +11,7 @@
 
 |功能描述| 接口地址 |
 | :---:| :---- |
-| [用户登陆](https://github.com/TextClassify/desktop_api/blob/master/README.md#5.功能：用户登陆) | http://120.24.66.39:8088/user/login |
+| [用户登陆](https://github.com/TextClassify/desktop_api/blob/master/README.md#用户登陆) | http://120.24.66.39:8088/user/login |
 | 用户注册 | http://120.24.66.39:8088/user/register |
 | 用户更新 | http://120.24.66.39:8088/user/update |
 | 一篇文章分类 | http://120.24.66.39:8088/user/oneText |
@@ -45,7 +45,7 @@
 
 **详细接口说明**
     
-#### 5.功能：用户登陆
+#### 用户登陆
       路径：http://120.24.66.39:8088/user/login
       参数：{
          	"userName":"xiaowang",
