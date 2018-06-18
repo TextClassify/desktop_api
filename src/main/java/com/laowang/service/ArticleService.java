@@ -111,7 +111,7 @@ public class ArticleService {
      * //分页查询功能
      */
     public List<Article> getArticlesByUserId(Integer uid,Integer page,Integer state){
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Sort sort = new Sort(Sort.Direction.DESC, "date");
         Pageable pageable = new PageRequest(page,10,sort);
         return repository.findAllByOwerIdAndState(uid,state,pageable);
     }
@@ -125,7 +125,7 @@ public class ArticleService {
      * //分页
      */
     public List<Article> getAllSharingArticleByUserId(Integer uid,Integer page){
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Sort sort = new Sort(Sort.Direction.DESC, "time");
         Pageable pageable = new PageRequest(page,10,sort);
         return repository.findAllByShareAndOwerIdAndState(1,uid,1,pageable);
     }
@@ -137,7 +137,7 @@ public class ArticleService {
      * //分页功能
      */
     public List<Article> getAllSharingArticles(Integer page){
-        Sort sort = new Sort(Sort.Direction.DESC, "date");
+        Sort sort = new Sort(Sort.Direction.DESC, "time");
         Pageable pageable = new PageRequest(page,10,sort);
         return repository.findAllByShareAndState(1,1,pageable);
     }
@@ -190,8 +190,8 @@ public class ArticleService {
     public List<Article> getLimitArticles(Integer uid,int page){
 
 //        Pageable pageable = new QPageRequest(0,10,sort);
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
-        Pageable pageable = new PageRequest(1,10,sort);
+        Sort sort = new Sort(Sort.Direction.DESC, "date");
+        Pageable pageable = new PageRequest(page,10,sort);
         return repository.findFirst10ByOwerIdAndState(uid,1,pageable);
     }
 
