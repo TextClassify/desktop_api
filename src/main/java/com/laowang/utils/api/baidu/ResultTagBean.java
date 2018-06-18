@@ -5,6 +5,15 @@ import java.util.List;
 public class ResultTagBean {
     private String lv1_tag;
     private List<String> lv2_tag;
+    private String labels;
+
+    public String getLabels() {
+        return labels;
+    }
+
+    public void setLabels(String labels) {
+        this.labels = labels;
+    }
 
     public String getLv1_tag() {
         return lv1_tag;
@@ -25,8 +34,9 @@ public class ResultTagBean {
     @Override
     public String toString() {
         return "{" +
-                "lv1_tag:'" + lv1_tag + '\'' +
-                ", lv2_tag:" + lv2_tag +
+                "lv1_tag='" + lv1_tag + '\'' +
+                ", lv2_tag=" + lv2_tag +
+                ", labels='" + labels + '\'' +
                 '}';
     }
 }

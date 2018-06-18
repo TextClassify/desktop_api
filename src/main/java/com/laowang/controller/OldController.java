@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 
@@ -55,7 +56,7 @@ public class OldController {
                 User user = userService.findUserByUserName(name);
                 if (user != null){
                     article.setOwerId(user.getId());
-                    article.setDate(new Date().toString());
+                    article.setDate(new Timestamp(new  Date().getTime()));
                     article.setShare(0);
                     article.setTag(result.getData().toString());
                     articleRepository.save(article);

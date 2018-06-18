@@ -14,16 +14,17 @@ import java.util.List;
 public class ClassifyTextService {
 
     public static void main(String args[]){
-        String url = "https://aip.baidubce.com/rpc/2.0/nlp/v1/topic?charset=UTF-8&access_token="+AuthService.getAuth();
+        String urlTag = "https://aip.baidubce.com/rpc/2.0/nlp/v1/topic?charset=UTF-8&access_token="+AuthService.getAuth();
+        String urlLabel = "https://aip.baidubce.com/rpc/2.0/nlp/v1/keyword?charset=UTF-8&access_token="+AuthService.getAuth();
         Document doc;
         Connection connection;
         try {
-        String json = "{\n" +
+            String json = "{\n" +
                 "\t\"title\":\"欧洲冠军联赛\",\n" +
                 "\t\"content\": \"欧洲冠军联赛是欧洲足球协会联盟主办的年度足球比赛，代表欧洲俱乐部足球最高荣誉和水平，被认为是全世界最高素质、最具影响力以及最高水平的俱乐部赛事，亦是世界上奖金最高的足球赛事和体育赛事之一。\"\n" +
                 "}";
-
-            connection = Jsoup.connect(url).header("Content-type","application/json");
+            //1. 先获取tags
+            connection = Jsoup.connect(urlTag).header("Content-type","application/json");
             connection.requestBody(json).ignoreContentType(true);
             doc = connection.post();
             //获取到分类结果，并解析出json串
@@ -44,6 +45,24 @@ public class ClassifyTextService {
             resultTagBean.setLv1_tag(lv1.getJSONObject(0).getString("tag"));//设置二级标签
             //返回结果封装完毕，打印
             System.out.println(resultTagBean);
+            //2.再获取labels
+            connection = Jsoup.connect(urlLabel).header("Content-type","application/json");
+            connection.requestBody(json).ignoreContentType(true);
+            doc = connection.post();
+            //获取到分类结果，并解析出json串
+            result = doc.body().html();
+            System.out.println(result);
+            jsonpObject = new JSONObject(result);
+            JSONArray items = jsonpObject.getJSONArray("items");
+            //封装结果
+            String labels = "";
+            if (items != null && items.length()>0){
+                for (int i=0;i<items.length();i++){
+                    labels += items.getJSONObject(i).getString("tag")+",";
+                }
+                labels = labels.substring(0,labels.length()-1);
+            }
+            System.out.println(labels);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package com.laowang.bean;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * Created by wangyonghao8 on 2018/6/3.
@@ -18,12 +19,60 @@ public class Article {
     private String tag2;//二级分类
     private String tag3;//二级分类
     private Integer share;//分享状态
-    private String date;//创建日期
+    private Timestamp date;//创建日期
     private Integer state;//是否删除
     private Integer owerId;//文章拥有者
+    private String url;//记录网络文章地址
+    private String labels;//文章标签
+    private Timestamp time;//分享时间(用于排序分页等操作)
     //
     @javax.persistence.Transient
     private String access_token;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getLabels() {
+        return labels;
+    }
+
+    public void setLabels(String labels) {
+        this.labels = labels;
+    }
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", tag='" + tag + '\'' +
+                ", tag1='" + tag1 + '\'' +
+                ", tag2='" + tag2 + '\'' +
+                ", tag3='" + tag3 + '\'' +
+                ", share=" + share +
+                ", date=" + date +
+                ", state=" + state +
+                ", owerId=" + owerId +
+                ", url='" + url + '\'' +
+                ", labels='" + labels + '\'' +
+                ", time=" + time +
+                ", access_token='" + access_token + '\'' +
+                '}';
+    }
 
     public String getAccess_token() {
         return access_token;
@@ -113,29 +162,12 @@ public class Article {
         this.tag = tag;
     }
 
-    public String getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", tag='" + tag + '\'' +
-                ", tag1='" + tag1 + '\'' +
-                ", tag2='" + tag2 + '\'' +
-                ", tag3='" + tag3 + '\'' +
-                ", share=" + share +
-                ", date='" + date + '\'' +
-                ", state=" + state +
-                ", owerId=" + owerId +
-                ", access_token='" + access_token + '\'' +
-                '}';
-    }
 }
